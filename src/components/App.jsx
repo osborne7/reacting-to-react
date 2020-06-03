@@ -13,22 +13,45 @@ class App extends Component {
         super(props);
 
         this.state = {
-            text: "James"
+            text: "James",
+            hasLoaded: false
         };
     }
 
     handleInputChange = (text) => {
         this.setState({text});
     }
+
+    handleClick = () => {
+        this.setState({hasLoaded: !this.state.hasLoaded})
+    }
+
+    componentDidMount = () => {
+        this.setState({hasLoaded: true})
+    }
     render() {
     // return <h1>Hi, I'm {this.props.name} and this is {this.state.text}!</h1>
+    if (this.state.hasLoaded === true) {
     return (
-        <div>
+        <React.Fragment>
             <input value={this.state.text}
-            onChange={ (event) => { this.handleInputChange(event.target.value)}} />
-        </div>
+                onChange={(event) => { this.handleInputChange(event.target.value)}} />
+            <button value={this.state.hasLoaded}
+                onClick={this.handleClick}
+                >Refresh</button>
+        </React.Fragment>        
     )
-
+} else {
+    return (
+        <React.Fragment>
+        <h1> Loading...</h1>
+           <button 
+           value={this.state.hasLoaded}
+           onClick={this.handleClick}>Click to load</button>
+          
+           </React.Fragment>
+    )
+}
     }
 }
 
